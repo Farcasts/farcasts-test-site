@@ -45,3 +45,12 @@ the custom domain `test.farcasts.com`.
 
 Serve the folder with any static server, then open it, e.g.
 `python3 -m http.server 8000`.
+
+## Local loop
+
+`bin/serve-local.sh [applier-origin] [port]` serves the site on localhost (default
+port 8788) with the applier script src rewritten to a local dashboard dev server
+(default `http://localhost:3000`). It writes a throwaway copy into `.local/`
+(gitignored), so the committed pages keep their prod `app.farcasts.com` origin.
+Run the dashboard with `pnpm -F @farcasts/dashboard dev` first, then open
+`http://localhost:8788`.
