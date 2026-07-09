@@ -1,0 +1,230 @@
+<!doctype html>
+<!-- Aster, Field Guide. Cross origin demo site for the farcasts applier. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Field Guide, Aster</title>
+  <meta name="description" content="This season's Aster lots, catalogued like an almanac. Single farm, single lot, roasted to order." />
+  <link rel="stylesheet" href="aster.css" />
+  <style>
+    .page-head { padding-top: clamp(48px, 7vw, 92px); }
+    .page-head .eyebrow { margin-bottom: 20px; }
+    .page-head h1 { max-width: 16ch; }
+    .page-head .lede { max-width: 46ch; margin: 26px 0 0; }
+
+    .guide-key {
+      display: flex; gap: 28px; flex-wrap: wrap; margin-top: 40px; padding-top: 26px;
+      border-top: 1px solid var(--line);
+      font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--moss-dim);
+    }
+    .guide-key span b { color: var(--stamen); font-weight: 400; }
+
+    /* Almanac entries */
+    .entries { margin-top: clamp(40px, 6vw, 72px); border-top: 1px solid var(--ink); }
+    .entry {
+      display: grid; grid-template-columns: 92px 1.1fr 1.4fr auto;
+      gap: clamp(18px, 3vw, 40px); align-items: start;
+      padding: clamp(30px, 4vw, 46px) 0; border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+    .entry:hover { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--paper-2) 60%, transparent) 30%, transparent); }
+    .entry-no { font-family: var(--mono); font-size: 13px; letter-spacing: .1em; color: var(--stamen); padding-top: 6px; }
+    .entry-id h3 { margin: 0 0 8px; }
+    .entry-id .region { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--moss); text-transform: uppercase; }
+    .entry-id .swatch { width: 100%; max-width: 150px; aspect-ratio: 5 / 6; border: 1px solid var(--line); margin-top: 16px; object-fit: cover; display: block; }
+    .entry-notes p { margin: 0 0 14px; color: var(--moss); font-size: 15px; }
+    .entry-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; margin: 0; }
+    .entry-spec dt { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--moss-dim); }
+    .entry-spec dd { margin: 0 0 8px; font-size: 14px; }
+    .entry-buy { text-align: right; padding-top: 4px; min-width: 130px; }
+    .entry-buy .price { font-family: var(--display); font-size: 26px; display: block; margin-bottom: 14px; }
+
+
+    @media (max-width: 900px) {
+      .entry { grid-template-columns: 60px 1fr; gap: 14px 18px; }
+      .entry-no { padding-top: 4px; }
+      .entry-notes, .entry-buy { grid-column: 1 / -1; }
+      .entry-buy { text-align: left; }
+      .entry-buy .price { display: inline-block; margin-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-head">
+    <div class="shell">
+      <a class="wordmark" href="index.html" aria-label="Aster, home">
+        <span class="mark" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3">
+            <circle cx="20" cy="20" r="3.2" fill="currentColor" stroke="none"/>
+            <path d="M20 17V5M20 23v12M17 20H5M23 20h12"/>
+            <path d="M17.2 17.2 8.7 8.7M22.8 22.8l8.5 8.5M22.8 17.2l8.5-8.5M17.2 22.8 8.7 31.3"/>
+          </svg>
+        </span>
+        <span class="letters">ASTER</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="menu.html" aria-current="page">Field Guide</a>
+        <a href="story.html">Story</a>
+        <a href="visit.html">Visit</a>
+        <a class="nav__cta btn" href="#subscription" style="padding:11px 20px;">Subscribe</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-head shell">
+      <p class="eyebrow">The Field Guide &middot; Winter catalogue</p>
+      <h1 class="display">Five lots, catalogued like the season that grew them.</h1>
+      <p class="lede">Each entry is a single farm and a single harvest. We list what we know: the row, the elevation, the process, and how it will taste at the still hour.</p>
+      <div class="guide-key">
+        <span>Roast: <b>to order</b></span>
+        <span>Ships: <b>within 48h</b></span>
+        <span>Format: <b>250g whole bean or ground</b></span>
+        <span>Numbering: <b>lot identity, not rank</b></span>
+      </div>
+    </section>
+
+    <section class="shell">
+      <div class="entries">
+        <article class="entry">
+          <div class="entry-no">No. 01</div>
+          <div class="entry-id">
+            <h3 class="display">Dawnline</h3>
+            <span class="region">Huila, Colombia</span>
+            <img class="swatch" src="assets/lot-dawnline.jpg" alt="Dawnline almanac plate" loading="lazy" />
+          </div>
+          <div class="entry-notes">
+            <p>Soft and rounded, the first cup that does not ask anything of you. Red apple, cane sugar, a finish like cocoa left on the tongue.</p>
+            <dl class="entry-spec">
+              <div><dt>Process</dt><dd>Washed</dd></div>
+              <div><dt>Elevation</dt><dd>1,750 m</dd></div>
+              <div><dt>Varietal</dt><dd>Caturra</dd></div>
+              <div><dt>Roast</dt><dd>Medium</dd></div>
+            </dl>
+          </div>
+          <div class="entry-buy"><span class="price">$21</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-no">No. 02</div>
+          <div class="entry-id">
+            <h3 class="display">Ember Field</h3>
+            <span class="region">Yirgacheffe, Ethiopia</span>
+            <img class="swatch" src="assets/lot-ember.jpg" alt="Ember Field almanac plate" loading="lazy" />
+          </div>
+          <div class="entry-notes">
+            <p>Bright and floral, the loud one done quietly. Bergamot, white peach, jasmine lifting off the top of the cup.</p>
+            <dl class="entry-spec">
+              <div><dt>Process</dt><dd>Natural</dd></div>
+              <div><dt>Elevation</dt><dd>2,050 m</dd></div>
+              <div><dt>Varietal</dt><dd>Heirloom</dd></div>
+              <div><dt>Roast</dt><dd>Light</dd></div>
+            </dl>
+          </div>
+          <div class="entry-buy"><span class="price">$23</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-no">No. 03</div>
+          <div class="entry-id">
+            <h3 class="display">Nightbloom</h3>
+            <span class="region">Antigua, Guatemala</span>
+            <img class="swatch" src="assets/lot-nightbloom.jpg" alt="Nightbloom almanac plate" loading="lazy" />
+          </div>
+          <div class="entry-notes">
+            <p>Deep and settled, for the hour you keep after the noise. Dark chocolate, dried plum, a low hum of pipe tobacco.</p>
+            <dl class="entry-spec">
+              <div><dt>Process</dt><dd>Washed</dd></div>
+              <div><dt>Elevation</dt><dd>1,600 m</dd></div>
+              <div><dt>Varietal</dt><dd>Bourbon</dd></div>
+              <div><dt>Roast</dt><dd>Medium dark</dd></div>
+            </dl>
+          </div>
+          <div class="entry-buy"><span class="price">$22</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-no">No. 04</div>
+          <div class="entry-id">
+            <h3 class="display">Halo</h3>
+            <span class="region">Nari&ntilde;o, Colombia</span>
+            <img class="swatch" src="assets/lot-halo.jpg" alt="Halo almanac plate" loading="lazy" />
+          </div>
+          <div class="entry-notes">
+            <p>Our still hour house lot, and the one on the front page. Honeyed and clear, orange blossom, brown sugar, a long clean finish.</p>
+            <dl class="entry-spec">
+              <div><dt>Process</dt><dd>Honey</dd></div>
+              <div><dt>Elevation</dt><dd>1,900 m</dd></div>
+              <div><dt>Varietal</dt><dd>Caturra, Castillo</dd></div>
+              <div><dt>Roast</dt><dd>Medium</dd></div>
+            </dl>
+          </div>
+          <div class="entry-buy"><span class="price">$24</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-no">No. 05</div>
+          <div class="entry-id">
+            <h3 class="display">Slate Creek</h3>
+            <span class="region">Kirinyaga, Kenya</span>
+            <img class="swatch" src="assets/lot-slate.jpg" alt="Slate Creek almanac plate" loading="lazy" />
+          </div>
+          <div class="entry-notes">
+            <p>Structured and juicy, the one that keeps you present. Blackcurrant, grapefruit, a savoury tomato edge under the acidity.</p>
+            <dl class="entry-spec">
+              <div><dt>Process</dt><dd>Washed</dd></div>
+              <div><dt>Elevation</dt><dd>1,800 m</dd></div>
+              <div><dt>Varietal</dt><dd>SL28, SL34</dd></div>
+              <div><dt>Roast</dt><dd>Light medium</dd></div>
+            </dl>
+          </div>
+          <div class="entry-buy"><span class="price">$25</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" style="text-align:center;" id="subscription">
+      <span class="mark" aria-hidden="true" style="display:inline-block;">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none"/>
+          <path d="M20 17V4M20 23v13M17 20H4M23 20h13M17.2 17.2 7.5 7.5M22.8 22.8l9.7 9.7M22.8 17.2l9.7-9.7M17.2 22.8 7.5 32.5"/>
+        </svg>
+      </span>
+      <h2 class="display" style="max-width:20ch;margin:24px auto 18px;">Not sure where to begin? Start a subscription and let the season pick.</h2>
+      <p class="lede" style="max-width:44ch;margin:0 auto 30px;">A rotating lot at the door every two weeks, always the freshest thing on the roaster.</p>
+      <a class="btn" href="visit.html">Begin a subscription <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="shell">
+      <div class="foot-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;">
+        <div class="foot-brand">
+          <span class="letters">ASTER</span>
+          <p class="foot-note">Single origin coffee roasted for the still hour. Small lots, roasted to order, shipped the week they are ready.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="menu.html">Field Guide</a>
+          <a href="story.html">Our Story</a>
+          <a href="visit.html">Visit the Roastery</a>
+        </div>
+        <div class="foot-col">
+          <h4>Care</h4>
+          <a href="visit.html">Contact</a>
+          <a href="visit.html">Wholesale</a>
+          <a href="visit.html">Shipping &amp; returns</a>
+        </div>
+      </div>
+      <div class="foot-legal">
+        <span>&copy; 2026 Aster Coffee Roasters</span>
+        <span>A demonstration site for farcasts adaptive testing</span>
+        <span>Internal test build</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://app.farcasts.com/farcasts.js" data-farcasts-project="test-farcasts-com"></script>
+</body>
+</html>

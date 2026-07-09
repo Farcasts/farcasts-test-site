@@ -1,0 +1,251 @@
+<!doctype html>
+<!--
+  Aster, a fictional single origin coffee brand. Standalone third party demo site for
+  the farcasts applier. Deployed on its OWN origin (demo.farcasts.com), a different
+  origin from app.farcasts.com, so it exercises the real cross origin path exactly as a
+  customer site would. The gated hero surfaces below carry the embed contract.
+-->
+<html lang="en" data-cf-hide>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aster, coffee for the still hour</title>
+  <meta name="description" content="Aster is a single origin coffee roasted for the quiet hour. Small lots, roasted to order, shipped the week they are ready." />
+  <link rel="stylesheet" href="aster.css" />
+  <style>
+    /* Home only. Hero composition and the manifesto, tenets, and lot preview blocks. */
+    .hero { padding-top: clamp(56px, 9vw, 104px); padding-bottom: clamp(40px, 6vw, 72px); }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.05fr .95fr;
+      gap: clamp(28px, 5vw, 64px); align-items: end;
+    }
+    .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+    .hero-eyebrow .divider { flex: 1; height: 1px; background: var(--line); }
+    #hero-headline { max-width: 14ch; margin: 0 0 26px; }
+    #hero-sub { max-width: 40ch; margin: 0 0 34px; }
+    .hero-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    .hero-meta {
+      font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--moss-dim);
+    }
+    .hero-figure { position: relative; }
+    #hero-image {
+      width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+      background: var(--paper-2); border: 1px solid var(--line);
+    }
+    .hero-figure figcaption {
+      position: absolute; left: 14px; bottom: 14px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--paper); background: rgba(28,38,32,.62); padding: 6px 10px; backdrop-filter: blur(2px);
+    }
+    .hero-index {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--line); border: 1px solid var(--line);
+      margin-top: clamp(40px, 6vw, 72px);
+    }
+    .hero-index div { background: var(--paper); padding: 20px 22px; }
+    .hero-index dt {
+      font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--moss-dim); margin-bottom: 8px;
+    }
+    .hero-index dd { margin: 0; font-family: var(--display); font-size: 19px; }
+
+    /* Manifesto */
+    .manifesto { display: grid; grid-template-columns: 1fr 1.5fr; gap: clamp(28px, 6vw, 90px); }
+    .manifesto p { font-family: var(--display); font-size: clamp(21px, 2.6vw, 30px); line-height: 1.42; margin: 0 0 24px; }
+    .manifesto p:last-child { margin-bottom: 0; }
+    .manifesto .drop::first-letter {
+      font-size: 3.4em; line-height: .8; float: left; padding: 6px 12px 0 0; color: var(--stamen);
+    }
+    .manifesto-side .eyebrow { margin-bottom: 18px; }
+    .manifesto-side .mark { margin-top: 4px; }
+
+    /* Tenets */
+    .tenets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+    .tenet { background: var(--paper); padding: clamp(28px, 4vw, 48px) clamp(22px, 3vw, 36px); }
+    .tenet .no { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--stamen); }
+    .tenet h3 { margin: 18px 0 10px; }
+    .tenet p { color: var(--moss); font-size: 15px; margin: 0; max-width: 32ch; }
+
+    /* Lot preview */
+    .lots-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 40px; }
+    .lots { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 3vw, 34px); }
+    .lot { text-decoration: none; color: inherit; display: block; }
+    .lot-swatch {
+      aspect-ratio: 5 / 6; border: 1px solid var(--line);
+      position: relative; overflow: hidden; transition: transform .3s ease;
+    }
+    .lot-swatch img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .lot:hover .lot-swatch { transform: translateY(-4px); }
+    .lot-swatch .no {
+      position: absolute; top: 14px; left: 14px; font-family: var(--mono); font-size: 10px;
+      letter-spacing: .12em; color: var(--paper); background: rgba(28,38,32,.62);
+      padding: 4px 8px; backdrop-filter: blur(2px);
+    }
+    .lot-name { display: block; font-family: var(--display); font-size: 20px; margin-top: 14px; }
+    .lot-foot { display: flex; justify-content: space-between; margin-top: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: .04em; }
+    .lot-foot .region { color: var(--moss); }
+
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; align-items: start; }
+      .hero-figure { order: -1; }
+      #hero-image { aspect-ratio: 16 / 11; }
+      .manifesto { grid-template-columns: 1fr; }
+      .tenets, .lots, .hero-index { grid-template-columns: 1fr; }
+      .lots { gap: 20px; }
+    }
+    @media (max-width: 520px) {
+      .hero-index { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-head">
+    <div class="shell">
+      <a class="wordmark" href="index.html" aria-label="Aster, home">
+        <span class="mark" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3">
+            <circle cx="20" cy="20" r="3.2" fill="currentColor" stroke="none"/>
+            <path d="M20 17V5M20 23v12M17 20H5M23 20h12"/>
+            <path d="M17.2 17.2 8.7 8.7M22.8 22.8l8.5 8.5M22.8 17.2l8.5-8.5M17.2 22.8 8.7 31.3"/>
+          </svg>
+        </span>
+        <span class="letters">ASTER</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="menu.html">Field Guide</a>
+        <a href="story.html">Story</a>
+        <a href="visit.html">Visit</a>
+        <a class="nav__cta btn" href="menu.html" style="padding:11px 20px;">Shop lots</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="hero-eyebrow">
+            <span class="eyebrow">Est. 2019 &nbsp;&middot;&nbsp; Roasted in small lots</span>
+            <span class="divider"></span>
+          </div>
+          <h1 class="display" id="hero-headline" data-farcasts-gate>A quieter cup for the loud part of the day.</h1>
+          <p class="lede" id="hero-sub" data-farcasts-gate>Single origin, slow roasted, and shipped the week it is ready. No haste in the cup.</p>
+          <div class="hero-actions">
+            <a class="btn" id="hero-cta" href="menu.html" data-farcasts-gate>Start your ritual <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            <span class="hero-meta">Free shipping over $40</span>
+          </div>
+        </div>
+        <figure class="hero-figure">
+          <img id="hero-image" data-farcasts-gate src="assets/hero-pour.jpg" alt="A slow morning pour, steam rising in low light" />
+          <figcaption>The still hour &middot; No. 04 Halo</figcaption>
+        </figure>
+      </div>
+
+      <dl class="hero-index">
+        <div><dt>Roast cadence</dt><dd>To order, weekly</dd></div>
+        <div><dt>Sourcing</dt><dd>One farm, one lot</dd></div>
+        <div><dt>Ships within</dt><dd>48 hours of roast</dd></div>
+      </dl>
+    </section>
+
+    <section class="section shell manifesto">
+      <div class="manifesto-side">
+        <p class="eyebrow">The still hour</p>
+        <span class="mark" aria-hidden="true">
+          <svg width="52" height="52" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none"/>
+            <path d="M20 17V4M20 23v13M17 20H4M23 20h13M17.2 17.2 7.5 7.5M22.8 22.8l9.7 9.7M22.8 17.2l9.7-9.7M17.2 22.8 7.5 32.5"/>
+            <circle cx="20" cy="20" r="9.5" opacity=".5"/>
+          </svg>
+        </span>
+      </div>
+      <div class="manifesto-body">
+        <p class="drop">The aster opens late, when the day has gone quiet and the light turns long. We roast for that hour. The one before the noise, or the one you keep after it.</p>
+        <p>Every lot is a single farm, roasted to order, and out the door within two days. Nothing sits. Nothing waits on a shelf until the brightness has left it.</p>
+      </div>
+    </section>
+
+    <section class="tenets">
+      <article class="tenet">
+        <span class="no">No. 01</span>
+        <h3 class="display">Slow roasted</h3>
+        <p>Small batches, roasted to order, never sitting on a shelf until the character fades.</p>
+      </article>
+      <article class="tenet">
+        <span class="no">No. 02</span>
+        <h3 class="display">Single origin</h3>
+        <p>One farm, one lot, traceable to the row it grew in and the hands that picked it.</p>
+      </article>
+      <article class="tenet">
+        <span class="no">No. 03</span>
+        <h3 class="display">Shipped fresh</h3>
+        <p>Out the door within forty eight hours of roast, at the very peak of the bean.</p>
+      </article>
+    </section>
+
+    <section class="section shell">
+      <div class="lots-head">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px;">From the field guide</p>
+          <h2 class="display">This season&rsquo;s lots</h2>
+        </div>
+        <a class="btn btn--ghost" href="menu.html">See all lots <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+      <div class="lots">
+        <a class="lot" href="menu.html">
+          <div class="lot-swatch"><span class="no">No. 01</span><img src="assets/lot-dawnline.jpg" alt="Dawnline, a coffee branch with ripe cherries at dawn" loading="lazy" /></div>
+          <span class="lot-name">Dawnline</span>
+          <div class="lot-foot"><span class="region">Huila, Colombia</span><span>$21</span></div>
+        </a>
+        <a class="lot" href="menu.html">
+          <div class="lot-swatch"><span class="no">No. 02</span><img src="assets/lot-ember.jpg" alt="Ember Field, coffee blossom and floral spray" loading="lazy" /></div>
+          <span class="lot-name">Ember Field</span>
+          <div class="lot-foot"><span class="region">Yirgacheffe, Ethiopia</span><span>$23</span></div>
+        </a>
+        <a class="lot" href="menu.html">
+          <div class="lot-swatch"><span class="no">No. 03</span><img src="assets/lot-nightbloom.jpg" alt="Nightbloom, deep ripe cherries and a dark flower" loading="lazy" /></div>
+          <span class="lot-name">Nightbloom</span>
+          <div class="lot-foot"><span class="region">Antigua, Guatemala</span><span>$22</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="shell">
+      <div class="foot-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;">
+        <div class="foot-brand">
+          <span class="letters">ASTER</span>
+          <p class="foot-note">Single origin coffee roasted for the still hour. Small lots, roasted to order, shipped the week they are ready.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="menu.html">Field Guide</a>
+          <a href="story.html">Our Story</a>
+          <a href="visit.html">Visit the Roastery</a>
+        </div>
+        <div class="foot-col">
+          <h4>Care</h4>
+          <a href="visit.html">Contact</a>
+          <a href="visit.html">Wholesale</a>
+          <a href="visit.html">Shipping &amp; returns</a>
+        </div>
+      </div>
+      <div class="foot-legal">
+        <span>&copy; 2026 Aster Coffee Roasters</span>
+        <span>A demonstration site for farcasts adaptive testing</span>
+        <span>Internal test build</span>
+      </div>
+    </div>
+  </footer>
+
+  <!--
+    Internal test build. Published at test.farcasts.com and always pinned to the
+    test-farcasts-com project (a private clone of the demo project) so JS
+    configurations can be experimented with separately from the public demo. Keep
+    the project id as test-farcasts-com.
+  -->
+  <script src="https://app.farcasts.com/farcasts.js" data-farcasts-project="test-farcasts-com"></script>
+</body>
+</html>

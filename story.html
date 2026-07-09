@@ -1,0 +1,189 @@
+<!doctype html>
+<!-- Aster, Story. Cross origin demo site for the farcasts applier. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Our Story, Aster</title>
+  <meta name="description" content="Why Aster roasts for the still hour. One roastery, single lots, and a slower idea of what coffee is for." />
+  <link rel="stylesheet" href="aster.css" />
+  <style>
+    .story-hero { padding-top: clamp(48px, 8vw, 104px); padding-bottom: clamp(32px, 5vw, 60px); }
+    .story-hero .eyebrow { margin-bottom: 22px; }
+    .story-hero h1 { max-width: 18ch; }
+    .story-lede { display: grid; grid-template-columns: 1fr 1.5fr; gap: clamp(24px, 5vw, 80px); margin-top: 42px; align-items: start; }
+    .story-lede .col-label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--moss-dim); }
+    .story-lede p { font-family: var(--display); font-size: clamp(19px, 2.2vw, 25px); line-height: 1.45; margin: 0 0 20px; }
+    .story-lede p:last-child { margin-bottom: 0; }
+
+    .band { background: var(--ink); color: var(--paper); }
+    .band .eyebrow { color: color-mix(in srgb, var(--stamen) 80%, var(--paper)); }
+    .band .rule { background: rgba(234,230,218,.16); }
+    .figures { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px); }
+    .figure .n { font-family: var(--display); font-size: clamp(40px, 6vw, 60px); color: var(--stamen); line-height: 1; }
+    .figure h3 { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin: 16px 0 8px; font-weight: 400; }
+    .figure p { color: color-mix(in srgb, var(--paper) 72%, transparent); font-size: 14px; margin: 0; max-width: 26ch; }
+
+    .timeline { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(24px, 4vw, 64px); }
+    .tl-list { border-top: 1px solid var(--line); }
+    .tl-item { display: grid; grid-template-columns: 96px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+    .tl-year { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; color: var(--stamen); padding-top: 3px; }
+    .tl-item h3 { margin: 0 0 6px; }
+    .tl-item p { color: var(--moss); font-size: 15px; margin: 0; max-width: 52ch; }
+
+    .pull { max-width: 22ch; margin: 0; }
+
+    .story-plate { margin-top: clamp(40px, 6vw, 72px); }
+    .story-plate figure { margin: 0; position: relative; border: 1px solid var(--line); }
+    .story-plate img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
+    .story-plate figcaption {
+      position: absolute; left: 14px; bottom: 14px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--paper); background: rgba(28,38,32,.62); padding: 6px 10px; backdrop-filter: blur(2px);
+    }
+
+    @media (max-width: 820px) {
+      .story-lede, .timeline { grid-template-columns: 1fr; }
+      .figures { grid-template-columns: 1fr; gap: 32px; }
+      .tl-item { grid-template-columns: 72px 1fr; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-head">
+    <div class="shell">
+      <a class="wordmark" href="index.html" aria-label="Aster, home">
+        <span class="mark" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3">
+            <circle cx="20" cy="20" r="3.2" fill="currentColor" stroke="none"/>
+            <path d="M20 17V5M20 23v12M17 20H5M23 20h12"/>
+            <path d="M17.2 17.2 8.7 8.7M22.8 22.8l8.5 8.5M22.8 17.2l8.5-8.5M17.2 22.8 8.7 31.3"/>
+          </svg>
+        </span>
+        <span class="letters">ASTER</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="menu.html">Field Guide</a>
+        <a href="story.html" aria-current="page">Story</a>
+        <a href="visit.html">Visit</a>
+        <a class="nav__cta btn" href="menu.html" style="padding:11px 20px;">Shop lots</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="story-hero shell">
+      <p class="eyebrow">Our Story &middot; Since 2019</p>
+      <h1 class="display">We started Aster to slow one small part of the day back down.</h1>
+      <div class="story-lede">
+        <span class="col-label">The idea</span>
+        <div>
+          <p>Coffee had gotten loud. Faster, bigger, brighter, more. We wanted the opposite: one farm, one lot, one careful roast, and a cup you could sit inside of.</p>
+          <p>So we named it for a flower that opens late, when the light goes long and the day finally quiets down. That hour is the whole brief.</p>
+        </div>
+      </div>
+      <div class="story-plate">
+        <figure>
+          <img src="assets/story-farm.jpg" alt="A single origin coffee farm at the quiet hour, terraced rows receding into mist" loading="lazy" />
+          <figcaption>The row it grew in &middot; Nari&ntilde;o, before dusk</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="band section">
+      <div class="shell">
+        <p class="eyebrow" style="margin-bottom:44px;">How we work</p>
+        <div class="figures">
+          <div class="figure">
+            <div class="n">1</div>
+            <h3>One roastery</h3>
+            <p>Everything comes off a single drum roaster in the same room it is packed in. We roast Tuesdays and Fridays.</p>
+          </div>
+          <div class="figure">
+            <div class="n">48h</div>
+            <h3>To your door</h3>
+            <p>Nothing ships older than two days off the roaster. If it cannot be fresh, we do not send it.</p>
+          </div>
+          <div class="figure">
+            <div class="n">5</div>
+            <h3>Lots a season</h3>
+            <p>We hold the guide short on purpose. Five farms we trust, rotated as each harvest comes in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell timeline">
+      <div>
+        <p class="eyebrow" style="margin-bottom:18px;">The long way here</p>
+        <blockquote class="pull display" style="font-size:clamp(24px,3.4vw,36px);line-height:1.2;">&ldquo;No haste in the cup.&rdquo;</blockquote>
+      </div>
+      <div class="tl-list">
+        <div class="tl-item">
+          <span class="tl-year">2019</span>
+          <div>
+            <h3 class="display">A borrowed drum</h3>
+            <p>Two of us, one rented roaster, and a market stall on Sundays. Sold out by ten, most weeks.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-year">2021</span>
+          <div>
+            <h3 class="display">The roastery on Larch Street</h3>
+            <p>We took a corner unit, put the roaster in the window, and opened the counter three mornings a week.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-year">2023</span>
+          <div>
+            <h3 class="display">Direct from the farm</h3>
+            <p>We stopped buying through the middle and started visiting the lots. Every bag now names the row it grew in.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-year">2026</span>
+          <div>
+            <h3 class="display">Still the still hour</h3>
+            <p>Bigger roaster, same idea. Small lots, roasted to order, shipped the week they are ready.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" style="text-align:center;">
+      <h2 class="display" style="max-width:18ch;margin:0 auto 28px;">Read the guide, pick a lot, and keep your quiet hour.</h2>
+      <a class="btn" href="menu.html">Open the Field Guide <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="shell">
+      <div class="foot-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;">
+        <div class="foot-brand">
+          <span class="letters">ASTER</span>
+          <p class="foot-note">Single origin coffee roasted for the still hour. Small lots, roasted to order, shipped the week they are ready.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="menu.html">Field Guide</a>
+          <a href="story.html">Our Story</a>
+          <a href="visit.html">Visit the Roastery</a>
+        </div>
+        <div class="foot-col">
+          <h4>Care</h4>
+          <a href="visit.html">Contact</a>
+          <a href="visit.html">Wholesale</a>
+          <a href="visit.html">Shipping &amp; returns</a>
+        </div>
+      </div>
+      <div class="foot-legal">
+        <span>&copy; 2026 Aster Coffee Roasters</span>
+        <span>A demonstration site for farcasts adaptive testing</span>
+        <span>Internal test build</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://app.farcasts.com/farcasts.js" data-farcasts-project="test-farcasts-com"></script>
+</body>
+</html>
