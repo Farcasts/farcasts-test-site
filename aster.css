@@ -3,12 +3,12 @@
 
 :root {
   --ink: #1c2620;
-  --paper: #eae6da;
-  --paper-2: #e2ddcd;
+  --paper: #faf9f6;
+  --paper-2: #f3f1ea;
   --moss: #4b5a4a;
   --moss-dim: #6f7d6c;
   --stamen: #c9a24b;
-  --line: #cfc8b6;
+  --line: #d0cab8;
   --line-ink: rgba(28, 38, 32, .16);
 
   --display: "Iowan Old Style", "Palatino Linotype", "Palatino", Georgia, serif;
