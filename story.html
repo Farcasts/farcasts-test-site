@@ -1,36 +1,36 @@
 <!doctype html>
-<!-- Aster, Story. Cross origin demo site for the farcasts applier. -->
+<!-- Halo, Method. Cross origin test site for the farcasts applier. -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Our Story, Aster</title>
-  <meta name="description" content="Why Aster roasts for the still hour. One roastery, single lots, and a slower idea of what coffee is for." />
-  <link rel="stylesheet" href="aster.css" />
+  <title>The Method, Halo</title>
+  <meta name="description" content="How Halo formulates: one active per product at a disclosed concentration, third party tested every batch. The reasoning behind a clinical skincare line." />
+  <link rel="stylesheet" href="halo.css" />
   <style>
-    .story-hero { padding-top: clamp(48px, 8vw, 104px); padding-bottom: clamp(32px, 5vw, 60px); }
-    .story-hero .eyebrow { margin-bottom: 22px; }
-    .story-hero h1 { max-width: 18ch; }
-    .story-lede { display: grid; grid-template-columns: 1fr 1.5fr; gap: clamp(24px, 5vw, 80px); margin-top: 42px; align-items: start; }
-    .story-lede .col-label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--moss-dim); }
-    .story-lede p { font-family: var(--display); font-size: clamp(19px, 2.2vw, 25px); line-height: 1.45; margin: 0 0 20px; }
+    .story-hero { padding-top: clamp(40px, 7vw, 92px); padding-bottom: clamp(28px, 4vw, 52px); }
+    .story-hero .eyebrow { margin-bottom: 20px; }
+    .story-hero h1 { max-width: 19ch; }
+    .story-lede { display: grid; grid-template-columns: 1fr 1.5fr; gap: clamp(24px, 5vw, 80px); margin-top: 40px; align-items: start; }
+    .story-lede .col-label { font-family: var(--mono); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: var(--slate-dim); }
+    .story-lede p { font-family: var(--display); font-weight: 500; font-size: clamp(18px, 2.1vw, 25px); line-height: 1.42; margin: 0 0 20px; letter-spacing: -.01em; }
     .story-lede p:last-child { margin-bottom: 0; }
+    .story-lede p .hl { color: var(--slate); }
 
     .band { background: var(--ink); color: var(--paper); }
-    .band .eyebrow { color: color-mix(in srgb, var(--stamen) 80%, var(--paper)); }
-    .band .rule { background: rgba(250,249,246,.16); }
+    .band .eyebrow { color: color-mix(in srgb, var(--slate) 55%, #fff); }
     .figures { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 60px); }
-    .figure .n { font-family: var(--display); font-size: clamp(40px, 6vw, 60px); color: var(--stamen); line-height: 1; }
-    .figure h3 { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin: 16px 0 8px; font-weight: 400; }
-    .figure p { color: color-mix(in srgb, var(--paper) 72%, transparent); font-size: 14px; margin: 0; max-width: 26ch; }
+    .figure .n { font-family: var(--display); font-weight: 650; font-size: clamp(38px, 5.5vw, 58px); color: color-mix(in srgb, var(--slate) 55%, #fff); line-height: 1; }
+    .figure h3 { font-family: var(--mono); font-size: 12px; letter-spacing: .13em; text-transform: uppercase; margin: 16px 0 8px; font-weight: 400; }
+    .figure p { color: color-mix(in srgb, var(--paper) 74%, transparent); font-size: 14px; margin: 0; max-width: 27ch; }
 
-    .timeline { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(24px, 4vw, 64px); }
-    .tl-list { border-top: 1px solid var(--line); }
-    .tl-item { display: grid; grid-template-columns: 96px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
-    .tl-year { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; color: var(--stamen); padding-top: 3px; }
-    .tl-item h3 { margin: 0 0 6px; }
-    .tl-item p { color: var(--moss); font-size: 15px; margin: 0; max-width: 52ch; }
-
+    /* Protocol: the actual formulation process, in order */
+    .protocol { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(24px, 4vw, 64px); }
+    .proto-list { border-top: 1px solid var(--line); }
+    .proto-item { display: grid; grid-template-columns: 64px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+    .proto-step { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--slate); padding-top: 4px; }
+    .proto-item h3 { margin: 0 0 6px; }
+    .proto-item p { color: var(--slate-dim); font-size: 15px; margin: 0; max-width: 54ch; }
     .pull { max-width: 22ch; margin: 0; }
 
     .story-plate { margin-top: clamp(40px, 6vw, 72px); }
@@ -38,153 +38,177 @@
     .story-plate img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
     .story-plate figcaption {
       position: absolute; left: 14px; bottom: 14px;
-      font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--paper); background: rgba(28,38,32,.62); padding: 6px 10px; backdrop-filter: blur(2px);
+      font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      color: #fff; background: rgba(26,34,51,.66); padding: 6px 10px; backdrop-filter: blur(2px);
     }
 
     @media (max-width: 820px) {
-      .story-lede, .timeline { grid-template-columns: 1fr; }
+      .story-lede, .protocol { grid-template-columns: 1fr; }
       .figures { grid-template-columns: 1fr; gap: 32px; }
-      .tl-item { grid-template-columns: 72px 1fr; gap: 16px; }
+      .proto-item { grid-template-columns: 52px 1fr; gap: 16px; }
     }
   </style>
-  <script src="https://dev.farcasts.com/farcasts.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6"></script>
 </head>
 <body>
+  <div class="announce">Free shipping over $60 &nbsp;&middot;&nbsp; <b>Every batch third party tested</b> &nbsp;&middot;&nbsp; Returns within 30 days</div>
+
   <header class="site-head">
     <div class="shell">
-      <a class="wordmark" href="index.html" aria-label="Aster, home">
+      <a class="wordmark" href="index.html" aria-label="Halo, home">
         <span class="mark" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3">
-            <circle cx="20" cy="20" r="3.2" fill="currentColor" stroke="none"/>
-            <path d="M20 17V5M20 23v12M17 20H5M23 20h12"/>
-            <path d="M17.2 17.2 8.7 8.7M22.8 22.8l8.5 8.5M22.8 17.2l8.5-8.5M17.2 22.8 8.7 31.3"/>
+          <svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="20" cy="20" r="12.5"/>
+            <circle cx="20" cy="20" r="4" fill="currentColor" stroke="none"/>
           </svg>
         </span>
-        <span class="letters">ASTER</span>
+        <span class="letters">HALO</span>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="menu.html">Field Guide</a>
-        <a href="story.html" aria-current="page">Story</a>
-        <a href="visit.html">Visit</a>
-        <a class="nav__cta btn" href="menu.html" style="padding:11px 20px;">Shop lots</a>
+        <a href="menu.html">Shop</a>
+        <a href="story.html" aria-current="page">Method</a>
+        <a href="visit.html">Consult</a>
+        <button class="cart-btn" type="button" aria-label="Open cart">Cart <span class="count">0</span></button>
       </nav>
     </div>
   </header>
 
   <main>
     <section class="story-hero shell">
-      <p class="eyebrow">Our Story &middot; Since 2019</p>
-      <h1 class="display">We started Aster to slow one small part of the day back down.</h1>
+      <p class="eyebrow">The Method &middot; Since 2021</p>
+      <h1 class="display">We started Halo because good actives were being wasted on bad formulas.</h1>
       <div class="story-lede">
-        <span class="col-label">The idea</span>
+        <span class="col-label">The premise</span>
         <div>
-          <p>Coffee had gotten loud. Faster, bigger, brighter, more. We wanted the opposite: one farm, one lot, one careful roast, and a cup you could sit inside of.</p>
-          <p>So we named it for a flower that opens late, when the light goes long and the day finally quiets down. That hour is the whole brief.</p>
+          <p>The science on the core skincare actives is settled. Niacinamide, retinoids, vitamin C, ceramides, the acids. What is not settled is whether the bottle in your hand holds enough of one to matter.</p>
+          <p>So we built a line on a single rule. <span class="hl">One active per formula, at a concentration we disclose, tested every batch.</span> Nothing hides in a blend, and nothing is there for the story on the label.</p>
         </div>
       </div>
       <div class="story-plate">
         <figure>
-          <img src="assets/story-farm.jpg" alt="A single origin coffee farm at the quiet hour, terraced rows receding into mist" loading="lazy" />
-          <figcaption>The row it grew in &middot; Nari&ntilde;o, before dusk</figcaption>
+          <img src="assets/halo-lab.jpg" alt="A calm clinical formulation laboratory in cool light" loading="lazy" />
+          <figcaption>Formulation bench &middot; every batch assayed before release</figcaption>
         </figure>
       </div>
     </section>
 
     <section class="band section">
       <div class="shell">
-        <p class="eyebrow" style="margin-bottom:44px;">How we work</p>
+        <p class="eyebrow" style="margin-bottom:44px;">In numbers</p>
         <div class="figures">
           <div class="figure">
             <div class="n">1</div>
-            <h3>One roastery</h3>
-            <p>Everything comes off a single drum roaster in the same room it is packed in. We roast Tuesdays and Fridays.</p>
+            <h3>Active per formula</h3>
+            <p>One studied ingredient does the work. No stack of half doses competing in the same bottle.</p>
           </div>
           <div class="figure">
-            <div class="n">48h</div>
-            <h3>To your door</h3>
-            <p>Nothing ships older than two days off the roaster. If it cannot be fresh, we do not send it.</p>
+            <div class="n">100%</div>
+            <h3>Batches assayed</h3>
+            <p>Every production run is third party tested for potency and purity before it ships.</p>
           </div>
           <div class="figure">
-            <div class="n">5</div>
-            <h3>Lots a season</h3>
-            <p>We hold the guide short on purpose. Five farms we trust, rotated as each harvest comes in.</p>
+            <div class="n">0</div>
+            <h3>Added fragrance</h3>
+            <p>No perfume, no essential oils, no dyes. Fewer reasons for skin to react to a formula.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section shell timeline">
+    <section class="section shell protocol">
       <div>
-        <p class="eyebrow" style="margin-bottom:18px;">The long way here</p>
-        <blockquote class="pull display" style="font-size:clamp(24px,3.4vw,36px);line-height:1.2;">&ldquo;No haste in the cup.&rdquo;</blockquote>
+        <p class="eyebrow" style="margin-bottom:18px;">How a formula is made</p>
+        <blockquote class="pull display" style="font-size:clamp(23px,3.2vw,34px);line-height:1.22;font-weight:600;">&ldquo;If we cannot print the number, we do not make the product.&rdquo;</blockquote>
       </div>
-      <div class="tl-list">
-        <div class="tl-item">
-          <span class="tl-year">2019</span>
+      <div class="proto-list">
+        <div class="proto-item">
+          <span class="proto-step">Step 01</span>
           <div>
-            <h3 class="display">A borrowed drum</h3>
-            <p>Two of us, one rented roaster, and a market stall on Sundays. Sold out by ten, most weeks.</p>
+            <h3 class="display">Pick the active, set the dose</h3>
+            <p>We start from the concentration the research supports, then formulate to hold it stable. The number comes first, the formula serves it.</p>
           </div>
         </div>
-        <div class="tl-item">
-          <span class="tl-year">2021</span>
+        <div class="proto-item">
+          <span class="proto-step">Step 02</span>
           <div>
-            <h3 class="display">The roastery on Larch Street</h3>
-            <p>We took a corner unit, put the roaster in the window, and opened the counter three mornings a week.</p>
+            <h3 class="display">Keep the base quiet</h3>
+            <p>The rest of the formula exists to deliver and stabilise the active. No secondary actives, no fragrance, nothing that muddies the read.</p>
           </div>
         </div>
-        <div class="tl-item">
-          <span class="tl-year">2023</span>
+        <div class="proto-item">
+          <span class="proto-step">Step 03</span>
           <div>
-            <h3 class="display">Direct from the farm</h3>
-            <p>We stopped buying through the middle and started visiting the lots. Every bag now names the row it grew in.</p>
+            <h3 class="display">Assay every batch</h3>
+            <p>Before a run ships, an outside lab confirms the active is present at the stated strength and the formula is clean. The batch code maps to that report.</p>
           </div>
         </div>
-        <div class="tl-item">
-          <span class="tl-year">2026</span>
+        <div class="proto-item">
+          <span class="proto-step">Step 04</span>
           <div>
-            <h3 class="display">Still the still hour</h3>
-            <p>Bigger roaster, same idea. Small lots, roasted to order, shipped the week they are ready.</p>
+            <h3 class="display">Print what is in the bottle</h3>
+            <p>The label names the active and the percentage, the box carries the batch. You get to reason about your own routine.</p>
           </div>
         </div>
       </div>
     </section>
 
     <section class="section shell" style="text-align:center;">
-      <h2 class="display" style="max-width:18ch;margin:0 auto 28px;">Read the guide, pick a lot, and keep your quiet hour.</h2>
-      <a class="btn" href="menu.html">Open the Field Guide <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <h2 class="display" style="max-width:20ch;margin:0 auto 26px;">Read the formulary, pick your actives, and build a routine you can trust.</h2>
+      <a class="btn" href="menu.html">Open the formulary <span class="arrow" aria-hidden="true">&rarr;</span></a>
     </section>
   </main>
 
   <footer class="site-foot">
     <div class="shell">
-      <div class="foot-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;">
-        <div class="foot-brand">
-          <span class="letters">ASTER</span>
-          <p class="foot-note">Single origin coffee roasted for the still hour. Small lots, roasted to order, shipped the week they are ready.</p>
-        </div>
-        <div class="foot-col">
-          <h4>Explore</h4>
-          <a href="menu.html">Field Guide</a>
-          <a href="story.html">Our Story</a>
-          <a href="visit.html">Visit the Roastery</a>
-        </div>
-        <div class="foot-col">
-          <h4>Care</h4>
-          <a href="visit.html">Contact</a>
-          <a href="visit.html">Wholesale</a>
-          <a href="visit.html">Shipping &amp; returns</a>
-        </div>
+      <div class="foot-brand">
+        <span class="letters">HALO</span>
+        <p class="foot-note">Clinical skincare formulated around single actives at studied concentrations. Named, tested, and traceable to the batch.</p>
       </div>
-      <div class="foot-legal">
-        <span>&copy; 2026 Aster Coffee Roasters</span>
-        <span>A demonstration site for farcasts adaptive testing</span>
-        <span>Internal test build</span>
+      <div class="foot-col">
+        <h4>Shop</h4>
+        <a href="menu.html">All formulas</a>
+        <a href="story.html">The method</a>
+        <a href="visit.html">Book a consult</a>
       </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <a href="visit.html">Contact</a>
+        <a href="visit.html">Batch reports</a>
+        <a href="visit.html">Shipping &amp; returns</a>
+      </div>
+    </div>
+    <div class="shell foot-legal">
+      <span>&copy; 2026 Halo Skin Sciences</span>
+      <span>A demonstration site for farcasts adaptive testing</span>
+      <span>Internal test build</span>
     </div>
   </footer>
 
+  <!-- overlays -->
+  <div class="overlay-backdrop" id="overlay-backdrop"></div>
+  <aside class="drawer" id="cart-drawer" aria-label="Cart">
+    <div class="drawer-head">
+      <h2>Your regimen</h2>
+      <button class="icon-close" type="button" data-close-overlay aria-label="Close cart">&times;</button>
+    </div>
+    <div class="drawer-body" id="cart-body"></div>
+    <div class="drawer-foot">
+      <div class="subtotal"><span>Subtotal</span><b id="cart-subtotal">$0</b></div>
+      <a class="btn" href="#">Checkout <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <p class="foot-fine">Demonstration cart. Nothing is charged.</p>
+    </div>
+  </aside>
+
+  <div class="sticky-promo" id="sticky-promo">
+    <button class="sp-close" type="button" aria-label="Dismiss promo">&times;</button>
+    <div class="sp-body">
+      <strong>First order, 15% off</strong>
+      <span>Code HALO15 at checkout</span>
+    </div>
+    <a class="sp-cta" href="menu.html">Shop</a>
+  </div>
+
+  <script src="https://dev.farcasts.com/farcasts_dev.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6"></script>
   <script async src="https://dev.farcasts.com/farcasts-track.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6" data-farcasts-track-endpoint="https://t.farcasts.com" data-farcasts-track-key="phc_CzXwcg28Mo4jd6gqGcXaTSQUXFjxFFjnMvfXhrqwiVsc"></script>
+  <script src="halo.js" defer></script>
 </body>
 </html>
