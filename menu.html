@@ -1,231 +1,328 @@
 <!doctype html>
-<!-- Aster, Field Guide. Cross origin demo site for the farcasts applier. -->
+<!-- Halo, Shop. Cross origin test site for the farcasts applier. The formulary: every
+     product leads with its active, concentration, concern and batch. Category sidebar +
+     concern filters are real vanilla JS. Quick-view and add-to-cart are DOM overlays. -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Field Guide, Aster</title>
-  <meta name="description" content="This season's Aster lots, catalogued like an almanac. Single farm, single lot, roasted to order." />
-  <link rel="stylesheet" href="aster.css" />
+  <title>The Formulary, Halo</title>
+  <meta name="description" content="Every Halo formula, catalogued by active and concentration. Filter by category and by concern, then read the batch." />
+  <link rel="stylesheet" href="halo.css" />
   <style>
-    .page-head { padding-top: clamp(48px, 7vw, 92px); }
-    .page-head .eyebrow { margin-bottom: 20px; }
-    .page-head h1 { max-width: 16ch; }
-    .page-head .lede { max-width: 46ch; margin: 26px 0 0; }
+    .page-head { padding-top: clamp(40px, 6vw, 76px); }
+    .page-head .eyebrow { margin-bottom: 18px; }
+    .page-head h1 { max-width: 18ch; }
+    .page-head .lede { max-width: 50ch; margin: 22px 0 0; }
 
-    .guide-key {
-      display: flex; gap: 28px; flex-wrap: wrap; margin-top: 40px; padding-top: 26px;
-      border-top: 1px solid var(--line);
-      font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--moss-dim);
+    .shop { display: grid; grid-template-columns: 232px 1fr; gap: clamp(28px, 4vw, 56px); margin-top: clamp(36px, 5vw, 60px); align-items: start; }
+
+    /* Sidebar */
+    .sidebar { position: sticky; top: 84px; }
+    .filter-group { border-top: 1px solid var(--ink); padding: 20px 0; }
+    .filter-group:last-child { border-bottom: 1px solid var(--line); }
+    .filter-group h4 { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--slate-dim); margin: 0 0 14px; }
+    .filter-list { list-style: none; margin: 0; padding: 0; }
+    .filter-btn {
+      display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px;
+      background: none; border: 0; cursor: pointer; padding: 7px 0; text-align: left;
+      font-family: var(--body); font-size: 15px; color: var(--ink); transition: color .18s;
     }
-    .guide-key span b { color: var(--stamen); font-weight: 400; }
+    .filter-btn .n { font-family: var(--mono); font-size: 11px; color: var(--slate-dim); }
+    .filter-btn:hover { color: var(--slate); }
+    .filter-btn[aria-pressed="true"] { color: var(--slate); font-weight: 600; }
+    .filter-btn[aria-pressed="true"] .dot { opacity: 1; }
+    .filter-btn .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--slate); opacity: 0; flex: none; }
+    .filter-label { display: flex; align-items: center; gap: 9px; }
+    .clear-filters { margin-top: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate-dim); background: none; border: 0; cursor: pointer; padding: 0; }
+    .clear-filters:hover { color: var(--slate); }
 
-    /* Almanac entries */
-    .entries { margin-top: clamp(40px, 6vw, 72px); border-top: 1px solid var(--ink); }
-    .entry {
-      display: grid; grid-template-columns: 92px 1.1fr 1.4fr auto;
-      gap: clamp(18px, 3vw, 40px); align-items: start;
-      padding: clamp(30px, 4vw, 46px) 0; border-bottom: 1px solid var(--line);
-      position: relative;
+    /* Results */
+    .results-bar { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--line); margin-bottom: 26px; }
+    .results-bar .count { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--slate-dim); }
+    .results-bar .count b { color: var(--ink); font-weight: 600; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.4vw, 28px); }
+    .prod { display: flex; flex-direction: column; }
+    .prod-shot { position: relative; aspect-ratio: 4 / 5; border: 1px solid var(--line); background: var(--panel); overflow: hidden; }
+    .prod-shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .prod:hover .prod-shot img { transform: scale(1.03); }
+    .prod-shot .conc { position: absolute; top: 10px; left: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: #fff; background: var(--slate); padding: 4px 8px; }
+    .prod-shot .qv {
+      position: absolute; left: 10px; right: 10px; bottom: 10px; transform: translateY(8px); opacity: 0;
+      font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      background: var(--panel); border: 1px solid var(--line-2); color: var(--ink); cursor: pointer; padding: 9px 0;
+      transition: opacity .25s ease, transform .25s ease, border-color .2s;
     }
-    .entry:hover { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--paper-2) 60%, transparent) 30%, transparent); }
-    .entry-no { font-family: var(--mono); font-size: 13px; letter-spacing: .1em; color: var(--stamen); padding-top: 6px; }
-    .entry-id h3 { margin: 0 0 8px; }
-    .entry-id .region { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--moss); text-transform: uppercase; }
-    .entry-id .swatch { width: 100%; max-width: 150px; aspect-ratio: 5 / 6; border: 1px solid var(--line); margin-top: 16px; object-fit: cover; display: block; }
-    .entry-notes p { margin: 0 0 14px; color: var(--moss); font-size: 15px; }
-    .entry-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; margin: 0; }
-    .entry-spec dt { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--moss-dim); }
-    .entry-spec dd { margin: 0 0 8px; font-size: 14px; }
-    .entry-buy { text-align: right; padding-top: 4px; min-width: 130px; }
-    .entry-buy .price { font-family: var(--display); font-size: 26px; display: block; margin-bottom: 14px; }
+    .prod:hover .qv, .prod:focus-within .qv { opacity: 1; transform: translateY(0); }
+    .prod-shot .qv:hover { border-color: var(--slate); color: var(--slate); }
+    .prod-meta { padding-top: 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .prod-cat { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--slate-dim); }
+    .prod-name { font-family: var(--display); font-weight: 600; font-size: 19px; letter-spacing: -.01em; }
+    .prod-concern { font-size: 14px; color: var(--slate-dim); }
+    .prod-batch { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--slate-dim); margin-top: 2px; }
+    .prod-buy { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .prod-price { font-family: var(--display); font-weight: 650; font-size: 19px; }
+    .add-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; background: var(--ink); color: var(--paper); border: 1px solid var(--ink); cursor: pointer; padding: 9px 14px; transition: background .2s, border-color .2s; }
+    .add-btn:hover { background: var(--slate); border-color: var(--slate); }
 
+    .no-results { grid-column: 1 / -1; padding: 60px 0; text-align: center; color: var(--slate-dim); }
 
-    @media (max-width: 900px) {
-      .entry { grid-template-columns: 60px 1fr; gap: 14px 18px; }
-      .entry-no { padding-top: 4px; }
-      .entry-notes, .entry-buy { grid-column: 1 / -1; }
-      .entry-buy { text-align: left; }
-      .entry-buy .price { display: inline-block; margin-right: 20px; }
+    /* mobile: sidebar collapses into a horizontal scroller */
+    @media (max-width: 860px) {
+      .shop { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .filter-group { border-top: 1px solid var(--line); padding: 16px 0; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
-  <script src="https://dev.farcasts.com/farcasts.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6"></script>
 </head>
 <body>
+  <div class="announce">Free shipping over $60 &nbsp;&middot;&nbsp; <b>Every batch third party tested</b> &nbsp;&middot;&nbsp; Returns within 30 days</div>
+
   <header class="site-head">
     <div class="shell">
-      <a class="wordmark" href="index.html" aria-label="Aster, home">
+      <a class="wordmark" href="index.html" aria-label="Halo, home">
         <span class="mark" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3">
-            <circle cx="20" cy="20" r="3.2" fill="currentColor" stroke="none"/>
-            <path d="M20 17V5M20 23v12M17 20H5M23 20h12"/>
-            <path d="M17.2 17.2 8.7 8.7M22.8 22.8l8.5 8.5M22.8 17.2l8.5-8.5M17.2 22.8 8.7 31.3"/>
+          <svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="20" cy="20" r="12.5"/>
+            <circle cx="20" cy="20" r="4" fill="currentColor" stroke="none"/>
           </svg>
         </span>
-        <span class="letters">ASTER</span>
+        <span class="letters">HALO</span>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="menu.html" aria-current="page">Field Guide</a>
-        <a href="story.html">Story</a>
-        <a href="visit.html">Visit</a>
-        <a class="nav__cta btn" href="#subscription" style="padding:11px 20px;">Subscribe</a>
+        <a href="menu.html" aria-current="page">Shop</a>
+        <a href="story.html">Method</a>
+        <a href="visit.html">Consult</a>
+        <button class="cart-btn" type="button" aria-label="Open cart">Cart <span class="count">0</span></button>
       </nav>
     </div>
   </header>
 
   <main>
     <section class="page-head shell">
-      <p class="eyebrow">The Field Guide &middot; Winter catalogue</p>
-      <h1 class="display">Five lots, catalogued like the season that grew them.</h1>
-      <p class="lede">Each entry is a single farm and a single harvest. We list what we know: the row, the elevation, the process, and how it will taste at the still hour.</p>
-      <div class="guide-key">
-        <span>Roast: <b>to order</b></span>
-        <span>Ships: <b>within 48h</b></span>
-        <span>Format: <b>250g whole bean or ground</b></span>
-        <span>Numbering: <b>lot identity, not rank</b></span>
-      </div>
+      <p class="eyebrow">The Formulary</p>
+      <h1 class="display">Every formula, by its active and its evidence.</h1>
+      <p class="lede">Filter by what a product is, or by the concern you are treating. Each entry names its active, its concentration, and the batch it was made in.</p>
     </section>
 
     <section class="shell">
-      <div class="entries">
-        <article class="entry">
-          <div class="entry-no">No. 01</div>
-          <div class="entry-id">
-            <h3 class="display">Dawnline</h3>
-            <span class="region">Huila, Colombia</span>
-            <img class="swatch" src="assets/lot-dawnline.jpg" alt="Dawnline almanac plate" loading="lazy" />
+      <div class="shop">
+        <aside class="sidebar" aria-label="Filters">
+          <div class="filter-group">
+            <h4>Category</h4>
+            <ul class="filter-list" id="cat-filters">
+              <li><button class="filter-btn" data-filter="cat" data-value="all" aria-pressed="true"><span class="filter-label"><span class="dot"></span>All formulas</span><span class="n">18</span></button></li>
+              <li><button class="filter-btn" data-filter="cat" data-value="Serum" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Serums</span><span class="n">5</span></button></li>
+              <li><button class="filter-btn" data-filter="cat" data-value="Cream" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Creams</span><span class="n">3</span></button></li>
+              <li><button class="filter-btn" data-filter="cat" data-value="Cleanser" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Cleansers</span><span class="n">3</span></button></li>
+              <li><button class="filter-btn" data-filter="cat" data-value="Oil" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Oils</span><span class="n">2</span></button></li>
+              <li><button class="filter-btn" data-filter="cat" data-value="Mask" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Masks</span><span class="n">2</span></button></li>
+              <li><button class="filter-btn" data-filter="cat" data-value="Toner" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Toners &amp; mists</span><span class="n">2</span></button></li>
+              <li><button class="filter-btn" data-filter="cat" data-value="Set" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Sets</span><span class="n">1</span></button></li>
+            </ul>
           </div>
-          <div class="entry-notes">
-            <p>Soft and rounded, the first cup that does not ask anything of you. Red apple, cane sugar, a finish like cocoa left on the tongue.</p>
-            <dl class="entry-spec">
-              <div><dt>Process</dt><dd>Washed</dd></div>
-              <div><dt>Elevation</dt><dd>1,750 m</dd></div>
-              <div><dt>Varietal</dt><dd>Caturra</dd></div>
-              <div><dt>Roast</dt><dd>Medium</dd></div>
-            </dl>
+          <div class="filter-group">
+            <h4>Concern</h4>
+            <ul class="filter-list" id="concern-filters">
+              <li><button class="filter-btn" data-filter="concern" data-value="all" aria-pressed="true"><span class="filter-label"><span class="dot"></span>Any concern</span></button></li>
+              <li><button class="filter-btn" data-filter="concern" data-value="Breakouts" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Breakouts</span></button></li>
+              <li><button class="filter-btn" data-filter="concern" data-value="Aging" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Fine lines</span></button></li>
+              <li><button class="filter-btn" data-filter="concern" data-value="Dryness" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Dryness</span></button></li>
+              <li><button class="filter-btn" data-filter="concern" data-value="Dullness" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Dullness</span></button></li>
+              <li><button class="filter-btn" data-filter="concern" data-value="Redness" aria-pressed="false"><span class="filter-label"><span class="dot"></span>Redness</span></button></li>
+            </ul>
           </div>
-          <div class="entry-buy"><span class="price">$21</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
-        </article>
+          <button class="clear-filters" id="clear-filters" type="button">Clear filters</button>
+        </aside>
 
-        <article class="entry">
-          <div class="entry-no">No. 02</div>
-          <div class="entry-id">
-            <h3 class="display">Ember Field</h3>
-            <span class="region">Yirgacheffe, Ethiopia</span>
-            <img class="swatch" src="assets/lot-ember.jpg" alt="Ember Field almanac plate" loading="lazy" />
+        <div class="results">
+          <div class="results-bar">
+            <span class="count"><b id="result-count">18</b> formulas</span>
+            <span class="count" id="active-filter-label">Showing everything</span>
           </div>
-          <div class="entry-notes">
-            <p>Bright and floral, the loud one done quietly. Bergamot, white peach, jasmine lifting off the top of the cup.</p>
-            <dl class="entry-spec">
-              <div><dt>Process</dt><dd>Natural</dd></div>
-              <div><dt>Elevation</dt><dd>2,050 m</dd></div>
-              <div><dt>Varietal</dt><dd>Heirloom</dd></div>
-              <div><dt>Roast</dt><dd>Light</dd></div>
-            </dl>
-          </div>
-          <div class="entry-buy"><span class="price">$23</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-no">No. 03</div>
-          <div class="entry-id">
-            <h3 class="display">Nightbloom</h3>
-            <span class="region">Antigua, Guatemala</span>
-            <img class="swatch" src="assets/lot-nightbloom.jpg" alt="Nightbloom almanac plate" loading="lazy" />
-          </div>
-          <div class="entry-notes">
-            <p>Deep and settled, for the hour you keep after the noise. Dark chocolate, dried plum, a low hum of pipe tobacco.</p>
-            <dl class="entry-spec">
-              <div><dt>Process</dt><dd>Washed</dd></div>
-              <div><dt>Elevation</dt><dd>1,600 m</dd></div>
-              <div><dt>Varietal</dt><dd>Bourbon</dd></div>
-              <div><dt>Roast</dt><dd>Medium dark</dd></div>
-            </dl>
-          </div>
-          <div class="entry-buy"><span class="price">$22</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-no">No. 04</div>
-          <div class="entry-id">
-            <h3 class="display">Halo</h3>
-            <span class="region">Nari&ntilde;o, Colombia</span>
-            <img class="swatch" src="assets/lot-halo.jpg" alt="Halo almanac plate" loading="lazy" />
-          </div>
-          <div class="entry-notes">
-            <p>Our still hour house lot, and the one on the front page. Honeyed and clear, orange blossom, brown sugar, a long clean finish.</p>
-            <dl class="entry-spec">
-              <div><dt>Process</dt><dd>Honey</dd></div>
-              <div><dt>Elevation</dt><dd>1,900 m</dd></div>
-              <div><dt>Varietal</dt><dd>Caturra, Castillo</dd></div>
-              <div><dt>Roast</dt><dd>Medium</dd></div>
-            </dl>
-          </div>
-          <div class="entry-buy"><span class="price">$24</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-no">No. 05</div>
-          <div class="entry-id">
-            <h3 class="display">Slate Creek</h3>
-            <span class="region">Kirinyaga, Kenya</span>
-            <img class="swatch" src="assets/lot-slate.jpg" alt="Slate Creek almanac plate" loading="lazy" />
-          </div>
-          <div class="entry-notes">
-            <p>Structured and juicy, the one that keeps you present. Blackcurrant, grapefruit, a savoury tomato edge under the acidity.</p>
-            <dl class="entry-spec">
-              <div><dt>Process</dt><dd>Washed</dd></div>
-              <div><dt>Elevation</dt><dd>1,800 m</dd></div>
-              <div><dt>Varietal</dt><dd>SL28, SL34</dd></div>
-              <div><dt>Roast</dt><dd>Light medium</dd></div>
-            </dl>
-          </div>
-          <div class="entry-buy"><span class="price">$25</span><a class="btn" href="visit.html">Add <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
-        </article>
+          <div class="grid" id="product-grid"></div>
+        </div>
       </div>
-    </section>
-
-    <section class="section shell" style="text-align:center;" id="subscription">
-      <span class="mark" aria-hidden="true" style="display:inline-block;">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1">
-          <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none"/>
-          <path d="M20 17V4M20 23v13M17 20H4M23 20h13M17.2 17.2 7.5 7.5M22.8 22.8l9.7 9.7M22.8 17.2l9.7-9.7M17.2 22.8 7.5 32.5"/>
-        </svg>
-      </span>
-      <h2 class="display" style="max-width:20ch;margin:24px auto 18px;">Not sure where to begin? Start a subscription and let the season pick.</h2>
-      <p class="lede" style="max-width:44ch;margin:0 auto 30px;">A rotating lot at the door every two weeks, always the freshest thing on the roaster.</p>
-      <a class="btn" href="visit.html">Begin a subscription <span class="arrow" aria-hidden="true">&rarr;</span></a>
     </section>
   </main>
 
   <footer class="site-foot">
     <div class="shell">
-      <div class="foot-grid" style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;">
-        <div class="foot-brand">
-          <span class="letters">ASTER</span>
-          <p class="foot-note">Single origin coffee roasted for the still hour. Small lots, roasted to order, shipped the week they are ready.</p>
-        </div>
-        <div class="foot-col">
-          <h4>Explore</h4>
-          <a href="menu.html">Field Guide</a>
-          <a href="story.html">Our Story</a>
-          <a href="visit.html">Visit the Roastery</a>
-        </div>
-        <div class="foot-col">
-          <h4>Care</h4>
-          <a href="visit.html">Contact</a>
-          <a href="visit.html">Wholesale</a>
-          <a href="visit.html">Shipping &amp; returns</a>
-        </div>
+      <div class="foot-brand">
+        <span class="letters">HALO</span>
+        <p class="foot-note">Clinical skincare formulated around single actives at studied concentrations. Named, tested, and traceable to the batch.</p>
       </div>
-      <div class="foot-legal">
-        <span>&copy; 2026 Aster Coffee Roasters</span>
-        <span>A demonstration site for farcasts adaptive testing</span>
-        <span>Internal test build</span>
+      <div class="foot-col">
+        <h4>Shop</h4>
+        <a href="menu.html">All formulas</a>
+        <a href="story.html">The method</a>
+        <a href="visit.html">Book a consult</a>
       </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <a href="visit.html">Contact</a>
+        <a href="visit.html">Batch reports</a>
+        <a href="visit.html">Shipping &amp; returns</a>
+      </div>
+    </div>
+    <div class="shell foot-legal">
+      <span>&copy; 2026 Halo Skin Sciences</span>
+      <span>A demonstration site for farcasts adaptive testing</span>
+      <span>Internal test build</span>
     </div>
   </footer>
 
+  <!-- overlays -->
+  <div class="overlay-backdrop" id="overlay-backdrop"></div>
+
+  <aside class="drawer" id="cart-drawer" aria-label="Cart">
+    <div class="drawer-head">
+      <h2>Your regimen</h2>
+      <button class="icon-close" type="button" data-close-overlay aria-label="Close cart">&times;</button>
+    </div>
+    <div class="drawer-body" id="cart-body"></div>
+    <div class="drawer-foot">
+      <div class="subtotal"><span>Subtotal</span><b id="cart-subtotal">$0</b></div>
+      <a class="btn" href="#">Checkout <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      <p class="foot-fine">Demonstration cart. Nothing is charged.</p>
+    </div>
+  </aside>
+
+  <div class="modal" id="quickview" aria-label="Product quick view">
+    <div class="modal-grid">
+      <img id="qv-img" src="assets/halo-serum-01.jpg" alt="" />
+      <div class="modal-body">
+        <button class="icon-close" type="button" data-close-overlay aria-label="Close quick view">&times;</button>
+        <span class="qv-cat" id="qv-cat">Serum</span>
+        <h2 id="qv-name">Clarify</h2>
+        <p class="qv-concern" id="qv-concern">For congestion and uneven texture</p>
+        <dl class="qv-spec">
+          <div><dt>Key active</dt><dd id="qv-active">10% niacinamide</dd></div>
+          <div><dt>Skin type</dt><dd id="qv-skin">All, oily leaning</dd></div>
+          <div><dt>Batch</dt><dd id="qv-batch">CLR-2411</dd></div>
+          <div><dt>Size</dt><dd id="qv-size">30 ml</dd></div>
+        </dl>
+        <div class="qv-foot">
+          <span class="qv-price" id="qv-price">$38</span>
+          <button class="btn" id="qv-add" type="button">Add to regimen <span class="arrow" aria-hidden="true">&rarr;</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky-promo" id="sticky-promo">
+    <button class="sp-close" type="button" aria-label="Dismiss promo">&times;</button>
+    <div class="sp-body">
+      <strong>First order, 15% off</strong>
+      <span>Code HALO15 at checkout</span>
+    </div>
+    <a class="sp-cta" href="#">Apply</a>
+  </div>
+
+  <script>
+    /* The formulary. 18 formulas; images cycle a generated set. Concentration is the
+       signature datum, batch code is texture. Rendered client side so the grid, the
+       filters and the quick-view all read from one source. */
+    window.HALO_PRODUCTS = [
+      { name: "Clarify", cat: "Serum", concern: "Breakouts", price: 38, active: "10% niacinamide", skin: "All, oily leaning", batch: "CLR-2411", size: "30 ml", img: "assets/halo-serum-01.jpg", note: "For congestion and uneven texture" },
+      { name: "Even", cat: "Serum", concern: "Dullness", price: 46, active: "15% vitamin C (THD)", skin: "All", batch: "EVN-2409", size: "30 ml", img: "assets/halo-serum-01.jpg", note: "For dullness and early dark spots" },
+      { name: "Quench", cat: "Serum", concern: "Dryness", price: 40, active: "2% hyaluronic complex", skin: "Dry, dehydrated", batch: "QNC-2412", size: "30 ml", img: "assets/halo-serum-01.jpg", note: "For tightness and dehydration" },
+      { name: "Resurface", cat: "Serum", concern: "Breakouts", price: 44, active: "8% mandelic acid", skin: "Sensitive, acne prone", batch: "RSF-2410", size: "30 ml", img: "assets/halo-serum-01.jpg", note: "A gentle nightly resurfacing acid" },
+      { name: "Calm", cat: "Serum", concern: "Redness", price: 42, active: "5% panthenol", skin: "Reactive, sensitive", batch: "CLM-2411", size: "30 ml", img: "assets/halo-serum-01.jpg", note: "For visible redness and reactivity" },
+
+      { name: "Buffer", cat: "Cream", concern: "Dryness", price: 42, active: "Ceramide 3 complex", skin: "Dry, compromised", batch: "BFR-2408", size: "50 ml", img: "assets/halo-cream-01.jpg", note: "A barrier cream for compromised skin" },
+      { name: "Shade", cat: "Cream", concern: "Aging", price: 36, active: "SPF 30 mineral", skin: "All", batch: "SHD-2412", size: "50 ml", img: "assets/halo-cream-01.jpg", note: "A daily mineral daytime shield" },
+      { name: "Cushion", cat: "Cream", concern: "Aging", price: 52, active: "3% peptide blend", skin: "Mature, dry", batch: "CSH-2409", size: "50 ml", img: "assets/halo-cream-01.jpg", note: "A firming night cream" },
+
+      { name: "Rinse", cat: "Cleanser", concern: "Dryness", price: 26, active: "Amino surfactant", skin: "All, dry leaning", batch: "RNS-2411", size: "150 ml", img: "assets/halo-cleanser-01.jpg", note: "A low pH cream cleanser" },
+      { name: "Clear Start", cat: "Cleanser", concern: "Breakouts", price: 28, active: "2% salicylic acid", skin: "Oily, acne prone", batch: "CST-2410", size: "150 ml", img: "assets/halo-cleanser-01.jpg", note: "A daily clarifying gel wash" },
+      { name: "Melt", cat: "Cleanser", concern: "Dullness", price: 30, active: "Cold pressed cleansing oil", skin: "All", batch: "MLT-2412", size: "150 ml", img: "assets/halo-cleanser-01.jpg", note: "A first cleanse that lifts SPF and grime" },
+
+      { name: "Renew", cat: "Oil", concern: "Aging", price: 54, active: "1% retinal", skin: "Normal, resilient", batch: "RNW-2409", size: "30 ml", img: "assets/halo-oil-01.jpg", note: "A nightly retinal in an oil base" },
+      { name: "Replenish", cat: "Oil", concern: "Dryness", price: 48, active: "Squalane + omega blend", skin: "Very dry", batch: "RPL-2411", size: "30 ml", img: "assets/halo-oil-01.jpg", note: "A last step seal for very dry skin" },
+
+      { name: "Draw", cat: "Mask", concern: "Breakouts", price: 34, active: "Kaolin + 2% zinc", skin: "Oily, congested", batch: "DRW-2410", size: "75 ml", img: "assets/halo-mask-01.jpg", note: "A weekly clarifying clay mask" },
+      { name: "Flood", cat: "Mask", concern: "Dryness", price: 36, active: "Polyglutamic acid", skin: "Dehydrated", batch: "FLD-2412", size: "75 ml", img: "assets/halo-mask-01.jpg", note: "An overnight hydrating mask" },
+
+      { name: "Prime", cat: "Toner", concern: "Dullness", price: 30, active: "5% PHA (gluconolactone)", skin: "All, sensitive ok", batch: "PRM-2411", size: "120 ml", img: "assets/halo-mist-01.jpg", note: "A gentle exfoliating toner" },
+      { name: "Set", cat: "Toner", concern: "Redness", price: 28, active: "Centella mist", skin: "Reactive", batch: "SET-2412", size: "100 ml", img: "assets/halo-mist-01.jpg", note: "A soothing hydrating mist" },
+
+      { name: "The Baseline", cat: "Set", concern: "Dullness", price: 96, active: "Cleanse, treat, protect", skin: "All", batch: "BSL-2412", size: "3 piece", img: "assets/halo-set-01.jpg", note: "The three step starter regimen" },
+    ];
+
+    (() => {
+      const grid = document.getElementById("product-grid");
+      const state = { cat: "all", concern: "all" };
+
+      const card = (p, i) => `
+        <article class="prod" data-cat="${p.cat}" data-concern="${p.concern}">
+          <div class="prod-shot">
+            <span class="conc">${p.active.split(" ").slice(0, 2).join(" ")}</span>
+            <img src="${p.img}" alt="${p.name} formula" loading="lazy" />
+            <button class="qv" type="button" data-quickview="${i}">Quick view</button>
+          </div>
+          <div class="prod-meta">
+            <span class="prod-cat">${p.cat}</span>
+            <span class="prod-name">${p.name}</span>
+            <span class="prod-concern">${p.note}</span>
+            <span class="prod-batch">Batch ${p.batch} &middot; ${p.size}</span>
+          </div>
+          <div class="prod-buy">
+            <span class="prod-price">$${p.price}</span>
+            <button class="add-btn" type="button" data-add data-name="${p.name}" data-cat="${p.cat}" data-batch="${p.batch}" data-price="${p.price}" data-img="${p.img}">Add</button>
+          </div>
+        </article>`;
+
+      grid.innerHTML = window.HALO_PRODUCTS.map(card).join("");
+
+      const catLabels = { Serum: "Serums", Cream: "Creams", Cleanser: "Cleansers", Oil: "Oils", Mask: "Masks", Toner: "Toners & mists", Set: "Sets" };
+      const concernLabels = { Breakouts: "Breakouts", Aging: "Fine lines", Dryness: "Dryness", Dullness: "Dullness", Redness: "Redness" };
+
+      const apply = () => {
+        let shown = 0;
+        grid.querySelectorAll(".prod").forEach((el) => {
+          const okCat = state.cat === "all" || el.dataset.cat === state.cat;
+          const okConcern = state.concern === "all" || el.dataset.concern === state.concern;
+          const show = okCat && okConcern;
+          el.style.display = show ? "" : "none";
+          if (show) shown++;
+        });
+        document.getElementById("result-count").textContent = shown;
+        let old = grid.querySelector(".no-results");
+        if (old) old.remove();
+        if (!shown) grid.insertAdjacentHTML("beforeend", '<p class="no-results">No formula matches that combination yet. Clear a filter to widen the search.</p>');
+
+        const parts = [];
+        if (state.cat !== "all") parts.push(catLabels[state.cat]);
+        if (state.concern !== "all") parts.push("for " + concernLabels[state.concern].toLowerCase());
+        document.getElementById("active-filter-label").textContent = parts.length ? parts.join(" ") : "Showing everything";
+      };
+
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const { filter, value } = btn.dataset;
+          state[filter] = value;
+          document.querySelectorAll(`.filter-btn[data-filter="${filter}"]`).forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+          apply();
+        });
+      });
+
+      document.getElementById("clear-filters").addEventListener("click", () => {
+        state.cat = "all"; state.concern = "all";
+        document.querySelectorAll('.filter-btn[data-value="all"]').forEach((b) => b.setAttribute("aria-pressed", "true"));
+        document.querySelectorAll('.filter-btn:not([data-value="all"])').forEach((b) => b.setAttribute("aria-pressed", "false"));
+        apply();
+      });
+    })();
+  </script>
+
+  <script src="https://dev.farcasts.com/farcasts_dev.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6"></script>
   <script async src="https://dev.farcasts.com/farcasts-track.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6" data-farcasts-track-endpoint="https://t.farcasts.com" data-farcasts-track-key="phc_CzXwcg28Mo4jd6gqGcXaTSQUXFjxFFjnMvfXhrqwiVsc"></script>
+  <script src="halo.js" defer></script>
 </body>
 </html>
