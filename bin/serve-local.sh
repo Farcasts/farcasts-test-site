@@ -9,8 +9,8 @@ origin="${1:-http://localhost:3000}"
 port="${2:-8788}"
 mkdir -p .local
 for f in *.html; do
-  sed "s|https://dev.farcasts.com/farcasts_dev.js|$origin/farcasts_dev.js|" "$f" > ".local/$f"
+  sed "s|https://dev.farcasts.com/farcasts.js|$origin/farcasts.js|" "$f" > ".local/$f"
 done
 cp -R halo.css halo.js assets .local/
-echo "serving http://localhost:$port with applier from $origin/farcasts_dev.js"
+echo "serving http://localhost:$port with applier from $origin/farcasts.js"
 python3 -m http.server "$port" --directory .local

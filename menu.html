@@ -2,7 +2,7 @@
 <!-- Halo, Shop. Cross origin test site for the farcasts applier. The formulary: every
      product leads with its active, concentration, concern and batch. Category sidebar +
      concern filters are real vanilla JS. Quick-view and add-to-cart are DOM overlays. -->
-<html lang="en">
+<html lang="en" data-cf-hide>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,6 +79,7 @@
       .grid { grid-template-columns: 1fr; }
     }
   </style>
+  <script src="https://dev.farcasts.com/farcasts.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6"></script>
 </head>
 <body>
   <div class="announce">Free shipping over $60 &nbsp;&middot;&nbsp; <b>Every batch third party tested</b> &nbsp;&middot;&nbsp; Returns within 30 days</div>
@@ -321,7 +322,6 @@
     })();
   </script>
 
-  <script src="https://dev.farcasts.com/farcasts_dev.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6"></script>
   <script async src="https://dev.farcasts.com/farcasts-track.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6" data-farcasts-track-endpoint="https://t.farcasts.com" data-farcasts-track-key="phc_CzXwcg28Mo4jd6gqGcXaTSQUXFjxFFjnMvfXhrqwiVsc"></script>
   <script src="halo.js" defer></script>
 </body>

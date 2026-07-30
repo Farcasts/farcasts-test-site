@@ -40,7 +40,7 @@ body {
 }
 
 /* Applier gate. Held at opacity 0 until the variant applies, so no control flash.
-   data-cf-hide is set on <html> inline before paint; farcasts_dev.js reveals gated nodes. */
+   data-cf-hide is set on <html> inline before paint; farcasts.js reveals gated nodes. */
 [data-cf-hide] [data-farcasts-gate] { opacity: 0; }
 [data-farcasts-gate] { transition: opacity .5s ease; }
 
