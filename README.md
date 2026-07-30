@@ -7,8 +7,8 @@ site, without touching the demo project that the demo depends on. Demo and test 
 the SAME Halo brand and content; they differ only in the install block (dev applier and
 tracker here, prod applier on the public demo).
 
-Published at `test.farcasts.com` via GitHub Pages. Every page loads the applier from
-`https://dev.farcasts.com/farcasts_dev.js` with
+Published at `test.farcasts.com` via GitHub Pages. Every page carries the one-line applier
+gate in `<head>`, `https://dev.farcasts.com/farcasts.js` with
 `data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6"`, plus the tracker.
 
 ## Halo
@@ -21,7 +21,7 @@ concentration data. Every product leads with its single active and disclosed con
 
 Static, multi page, no build step.
 
-- `index.html`, home. Carries the gated hero, the tested surface, plus the store overlays.
+- `index.html`, home. Carries the tested surface plus the store overlays.
 - `menu.html`, the Formulary. 18 formulas with a category sidebar and working concern
   filters, quick-view modal, and add-to-cart.
 - `story.html`, the Method, how a formula is made and why.
@@ -34,18 +34,20 @@ public demo.
 
 ## Embed contract
 
-`index.html` carries the whole contract on its gated hero:
+Every page carries the same install, exactly what a customer has, plain HTML plus the
+pinned one-line gate:
 
-- `<script src="https://dev.farcasts.com/farcasts_dev.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6">`
-  loads the applier and points it at the test project. Keep this value.
-- The tracker tag points at `https://t.farcasts.com`. Keep the project id and track key.
-- `data-cf-hide` on the `<html>` element plus `data-farcasts-gate` on each testable
-  element hold the gated surfaces at opacity 0 until the variant applies, so no control
-  flash. The gate CSS lives in `halo.css`.
-- The gated hero ids are `hero-headline`, `hero-sub`, `hero-cta`, and `hero-image`.
-
-Every page includes the same applier and tracker scripts so cross navigation keeps them
-loaded, but only the home page declares gated surfaces (that is the tested project).
+- `<script src="https://dev.farcasts.com/farcasts.js" data-farcasts-project="p_a6764214-0a20-4abe-8360-866bc05c26f6">`
+  in `<head>` loads the applier gate, pointed at the test project. Keep this value. The
+  gate hides the page pre-paint, pre-starts the config fetch, injects the applier itself,
+  and reveals on apply, zero frames, timeout, or load failure. No `data-farcasts-gate`
+  attributes anywhere, the whole-page gate needs none.
+- `data-cf-hide` on the `<html>` element holds the page before paint until the applier
+  reveals it. The residual gate CSS in `halo.css` is inert with no gated nodes present.
+- The tracker tag at body end points at `https://t.farcasts.com`. Keep the project id and
+  track key.
+- The tested hero ids on the home page are `hero-headline`, `hero-sub`, `hero-cta`, and
+  `hero-image`.
 
 ## Deploy
 
